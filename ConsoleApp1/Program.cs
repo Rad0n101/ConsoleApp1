@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using static System.Console;
 
 namespace ConsoleApp1
 {
@@ -6,32 +7,43 @@ namespace ConsoleApp1
     {
         public static void Main(string[] args)
         {
-            //Console.WriteLine("Введите адрес сайта [example.net]");
-            //string websiteUrl = Console.ReadLine();
-
-            //WebClient client = new WebClient();
-
-            //using (Stream stream = client.OpenRead($"https://{websiteUrl}"))
-            //{
-            //    using (StreamReader reader = new StreamReader(stream))
-            //    {
-            //        string line = "";
-            //        while ((line = reader.ReadLine()) != null)
-            //        {
-            //            Console.WriteLine(line);
-            //        }
-            //    }
-            //}
-
-            //Console.WriteLine("Файл загружен");
-            //Console.Read();
+            Title = "XD";
+            ConsoleSpiner spin = new ConsoleSpiner();
+            Console.ForegroundColor = ConsoleColor.Green;
 
             DownloadFileAsync().GetAwaiter();
 
             Console.WriteLine("Файл загружен");
+
+            Console.Write("ConsoleAnimation....");
+            while (true)
+            {
+                spin.Turn();
+            }
             Console.ReadLine();
         }
-
+        public class ConsoleSpiner
+        {
+            int counter;
+            public ConsoleSpiner()
+            {
+                counter = 0;
+            }
+            public void Turn()
+            {
+                Console.CursorVisible = false;
+                counter++;
+                Thread.Sleep(100);
+                switch (counter % 4)
+                {
+                    case 0: Console.Write("/"); break;
+                    case 1: Console.Write("-"); break;
+                    case 2: Console.Write("\\"); break;
+                    case 3: Console.Write("|"); break;
+                }
+                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+            }
+        }
         private static async Task DownloadFileAsync()
         {
             Console.WriteLine(@"
@@ -48,6 +60,7 @@ namespace ConsoleApp1
 ");
 
             Console.WriteLine("Введите адрес сайта [example.net]");
+
             string websiteUrl = Console.ReadLine();
 
             Console.WriteLine("Путь куда сохранить файл [с:\\examle\\fileName.txt]");
